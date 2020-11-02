@@ -1,0 +1,60 @@
+#title {
+    text-align: center;
+}
+
+.game-container {
+    border: 1px solid black;
+    margin: auto;
+    height: 500px;
+    width: 50%
+}
+
+.player-inputs {
+    /* display: none; */
+    border: 1px solid black;
+    height: 300px;
+    width: 30%;
+    text-align: center;
+    margin: auto;
+}
+
+.inputs {
+    height: 35px;
+    width: 200px;
+}
+
+#play-btn {
+    height:30px;
+    width: 80px;
+}
+
+#game-table {
+    display:none;
+}
+
+/* #player-1 {
+
+}
+    
+#player-2 {
+
+}
+    
+#player-ai {
+
+}
+     */
+
+#game-inputs {
+    border:1px solid black;
+    width: 50%;
+    height: 100%;
+    margin: auto;
+}
+
+table {
+    table-layout: fixed;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}

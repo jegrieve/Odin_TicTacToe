@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TicTacToe</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+    <h1 id = "title">TicTacToe</h1>
+    <div class = "game-container">
+        <div class = "player-inputs">
+            <h4>Game Settings</h4>
+            <div id = "player-1">
+                Player 1 Name:<br><input id = "player1-input" type = "text" class = "inputs" required>
+            </div>
+            <div id = "player-2">
+                Player 2 Name:<br><input id = "player2-input" type = "text" class = "inputs" required>
+            </div>
+            <div id = "player-ai">
+                Player 2 AI:<br> <input id = "ai-input"  class = "inputs" type = "checkbox">
+            </div>
+            <br>
+            <button id = "play-btn" type = "submit">Play</input>
+        </div>
+
+        <table id = "game-table">
+            <tr id = "top-row">
+                <td id = "0">test</td>
+                <td id = "1">test</td>
+                <td id = "2">test</td>
+            </tr>
+            <tr id = "mid-row">
+                <td id = "3">test</td>
+                <td id = "4">test</td>
+                <td id = "5">test</td>
+            </tr>
+            <tr id = "bot-row">
+                <td id = "6">test</td>
+                <td id = "7">test</td>
+                <td id = "8">test</td>
+            </tr>
+        </table>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
