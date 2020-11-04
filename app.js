@@ -115,7 +115,9 @@ const handlers = (() => {
         const endgameInfo = document.getElementById("endgame-info")
         endgame.hidden = false;
         endgameInfo.innerHTML = `${player} Wins!!!`
-        winCombo.
+        winCombo.forEach((boxId) => {
+            document.getElementById(boxId).style.background = "green"
+        })
         endThisGame();
     }
 
