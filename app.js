@@ -16,7 +16,7 @@ const gamePlay = (() => {
 })();
 
 const handlers = (() => {
-    const inputMode = () => { // add this to a button later
+    const inputMode = () => { 
         document.getElementById("player-inputs").hidden = false;
         document.getElementById("endgame").hidden = true;
         document.getElementById("game-table").hidden = true;
@@ -46,11 +46,14 @@ const handlers = (() => {
             })
     };
     const getInputs = () => {
-            gamePlay.currentPlayers = [];
             const playerForm = document.getElementById("player-data")
             const xPlayerName = document.getElementById("player1-input").value
             const oPlayerName = document.getElementById("player2-input").value
-           
+            const replayBtn = document.getElementById("replay-btn")
+            replayBtn.addEventListener("click", function(e) {
+                clearInputs();
+                inputMode();
+            })
             gamePlay.currentPlayers.push(Player(xPlayerName))
             gamePlay.currentPlayers.push(Player(oPlayerName))
         
@@ -125,7 +128,16 @@ const handlers = (() => {
         document.getElementById("game-table").removeEventListener("click", inputEventListener)
     }
 
-    return {inputMode, gameMode, validateForm, formHandler, placeInput, changePlayer, checkWin, winner}
+    const clearInputs = () => {
+        const boxIds = Array.from(Array(9).keys())
+        boxIds.forEach((id) => {
+            document.getElementById(id).innerHTML = "";
+            document.getElementById(id).style.background = "none"
+        })
+        gamePlay.currentPlayers = [];
+    }
+
+    return {inputMode, gameMode, validateForm, formHandler, placeInput, changePlayer, checkWin, winner, clearInputs}
 })();
 
 const gameBoard = (() => {
