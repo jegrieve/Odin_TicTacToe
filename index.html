@@ -9,22 +9,30 @@
 </head>
 <body>
     <h1 id = "title">TicTacToe</h1>
+    <div id = "replay">
+        <button id = "replay-btn">Replay</button>
+    </div>
     <div class = "game-container">
-        <div class = "player-inputs">
+        <div id = "player-inputs">
             <h4>Game Settings</h4>
+            <form id = "player-data">
             <div id = "player-1">
-                Player 1 Name:<br><input id = "player1-input" type = "text" class = "inputs" required>
+                (X) Player 1 Name:<br><input id = "player1-input" type = "text" class = "inputs" required>
             </div>
             <div id = "player-2">
-                Player 2 Name:<br><input id = "player2-input" type = "text" class = "inputs" required>
+                (O) Player 2 Name:<br><input id = "player2-input" type = "text" class = "inputs" required>
             </div>
             <div id = "player-ai">
                 Player 2 AI:<br> <input id = "ai-input"  class = "inputs" type = "checkbox">
             </div>
             <br>
-            <button id = "play-btn" type = "submit">Play</input>
+            <button id = "submit-btn" type = "submit">Play</input>
+            <form>
         </div>
-
+        <div id = "endgame">
+            <div id = "endgame-info">
+            </div>
+        </div>
         <table id = "game-table">
             <tr id = "top-row">
                 <td id = "0" class = "left"></td>

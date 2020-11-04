@@ -7,16 +7,26 @@ body {
     font-size: 50px;
 }
 
+#replay-btn { 
+    position: absolute;
+    margin-top: -70px;
+    margin-left: 70px;
+    width: 125px;
+    height: 25px;
+    border: 1px solid green;
+    background-color: rgba(77, 250, 8, 0.8)
+}
+
 .game-container {
     margin: auto;
     height: 500px;
     width: 50%
 }
 
-.player-inputs {
-    display: none;
+#player-inputs {
+    /* display: none; */
     border: 1px solid black;
-    height: 300px;
+    height: 350px;
     width: 30%;
     text-align: center;
     margin: auto;
@@ -27,7 +37,7 @@ body {
     width: 80%;
 }
 
-#play-btn {
+#submit-btn {
     height:30px;
     width: 80px;
 }
@@ -65,6 +75,10 @@ table {
     font-size: 125px;
 }
 
+tr {
+    height: 33%;
+}
+
 .left {
     border-right: 3px solid black;
     border-bottom: 3px solid black;
@@ -90,4 +104,25 @@ table {
 
 #bot-row .right {
     border-bottom: none;
+}
+
+#endgame {
+    position: absolute;
+    margin-top: 50px;
+    padding-top: 200px;
+    height: 200px;
+    width: 370px;
+    background-color: rgba(240, 224, 6, 0.5)
+}
+
+#endgame-info {
+    color: rgba(233, 61, 8, 0.9);
+    text-align: center;
+    margin-top: -120px;
+    font-size: 100px;
+}
+
+#endgame-btn {
+    width: 100px;
+    height: 100px;
 }
