@@ -1,21 +1,30 @@
 const Player = (name) => {
-    let playerCount = gamePlay.currentPlayers.length
+    let playerCount = gameData.currentPlayers.length;
     const symbol = (playerCount === 0) ? "X" : "O";
-    return {name, symbol}
+    return {name, symbol};
 };
 
-const gamePlay = (() => {
+const gameData = (() => {
     let currentPlayers = [];
     let winningCombos = [
         [0,1,2],[3,4,5],
         [6,7,8],[0,3,6],
         [1,4,7],[2,5,8],
         [0,4,8],[2,4,6]
-    ]
-    return {currentPlayers, winningCombos}
+    ];
+    const clearInputs = () => {
+        const boxIds = Array.from(Array(9).keys());
+        boxIds.forEach((id) => {
+            let box = document.getElementById(id);
+            box.innerHTML = "";
+            box.style.background = "none";
+        })
+        gameData.currentPlayers = [];
+    };
+    return {currentPlayers, winningCombos, clearInputs};
 })();
 
-const handlers = (() => {
+const gameState = (() => {
     const inputMode = () => { 
         document.getElementById("player-inputs").hidden = false;
         document.getElementById("endgame").hidden = true;
@@ -24,64 +33,50 @@ const handlers = (() => {
     const gameMode = () => {
         document.getElementById("player-inputs").hidden = true;
         document.getElementById("game-table").hidden = false;
-    }
-    const validateForm = () => {
-        const playerOne = document.getElementById("player1-input").value
-        const playerTwo = document.getElementById("player2-input").value
-        if ((playerOne.length !== 0 && playerTwo.length !== 0) && (playerOne !== playerTwo) && (playerOne.trim().length !== 0 && playerTwo.trim().length !== 0)) {
-            return true;
-        } else {
-            return false;
-        };
     };
-    const formHandler = () => {
-        document.getElementById("submit-btn").addEventListener("click", function(e) {
-                e.preventDefault();
-                let validForm = validateForm();
-                if (validForm) {
-                    getInputs();
-                } else {
-                    alert("Fill out everything, and provide different names")
-                }
-            })
-    };
-    const getInputs = () => {
-            const playerForm = document.getElementById("player-data")
-            const xPlayerName = document.getElementById("player1-input").value
-            const oPlayerName = document.getElementById("player2-input").value
-            const replayBtn = document.getElementById("replay-btn")
-            replayBtn.addEventListener("click", function(e) {
-                clearInputs();
-                inputMode();
-            })
-            gamePlay.currentPlayers.push(Player(xPlayerName))
-            gamePlay.currentPlayers.push(Player(oPlayerName))
-        
-            playerForm.reset();
-            handlers.gameMode();
-            placeInput();
-        };
-    const inputEventListener = (e) => {
-            const boxIds = Array.from(Array(9).keys())
-            if ((boxIds.includes(Number(e.target.id))) && (e.target.innerHTML === "")){
-                e.target.innerHTML = gamePlay.currentPlayers[0].symbol
-                if (checkWin(gamePlay.currentPlayers[0].symbol)) {
-                    winner(gamePlay.currentPlayers[0].name, checkWin(gamePlay.currentPlayers[0].symbol))
-                } else { 
-                    changePlayer();
-                }
-            }
-    }
-    const placeInput = () => {
-            document.getElementById("game-table").addEventListener("click", inputEventListener) 
-    };
+    return {inputMode, gameMode};
+})();
+
+const gamePlay = (() => {
     const changePlayer = () => {
-        [gamePlay.currentPlayers[0], gamePlay.currentPlayers[1]] = [gamePlay.currentPlayers[1], gamePlay.currentPlayers[0]] 
-    };    
+        [gameData.currentPlayers[0], gameData.currentPlayers[1]] = [gameData.currentPlayers[1], gameData.currentPlayers[0]] 
+    };  
+    const getInputs = () => {
+        const playerForm = document.getElementById("player-data")
+        const xPlayerName = document.getElementById("player1-input").value
+        const oPlayerName = document.getElementById("player2-input").value
+        const replayBtn = document.getElementById("replay-btn")
+        replayBtn.addEventListener("click", function(e) {
+            gameData.clearInputs();
+            gameState.inputMode();
+        })
+        gameData.currentPlayers.push(Player(xPlayerName))
+        gameData.currentPlayers.push(Player(oPlayerName))
+    
+        playerForm.reset();
+        gameState.gameMode();
+        placeInput();
+    };
+    const placeInput = () => {
+        document.getElementById("game-table").addEventListener("click", inputEventListener) 
+    };
+    const inputEventListener = (e) => {
+        const boxIds = Array.from(Array(9).keys());
+        let currentPlayer = gameData.currentPlayers[0];
+        if ((boxIds.includes(Number(e.target.id))) && (e.target.innerHTML === "")){
+            e.target.innerHTML = currentPlayer.symbol
+            if (checkWin(currentPlayer.symbol)) {
+                winner(currentPlayer.name, checkWin(currentPlayer.symbol))
+            } else if (tieGame()) {
+                endGameTie();
+            } else { 
+                changePlayer();
+            };
+        };
+    };
     const checkWin = (symbol) => {
-        let winningCombos = gamePlay.winningCombos
+        let winningCombos = gameData.winningCombos
         let combos = [];
-  
         for (let i = 0; i < 9; i++) {
             if (document.getElementById(i).innerHTML === symbol) {
                 combos.push(Number(i))
@@ -89,28 +84,21 @@ const handlers = (() => {
         }
 
         let winCombo = "";
-
         winningCombos.forEach((array) => {
             let possibleCombo = [];
-
             array.forEach((el) => {
                 if (combos.indexOf(el) === -1) {
                     return false
                 }
                 possibleCombo.push(el);
             })
-
             if (possibleCombo.length === 3)
             {
                 winCombo = possibleCombo
             }
-
         })
-
-        if (winCombo) {
-            return winCombo
-        }
-            return false
+        if (winCombo) return winCombo
+        return false
     };
 
     const winner = (player, winCombo) => {
@@ -124,48 +112,58 @@ const handlers = (() => {
         endThisGame();
     }
 
+    const tieGame = () => {
+        let boxIds = Array.from(Array(9).keys());
+        let boxArr = [];
+        boxIds.forEach((boxId) => {
+           if (document.getElementById(boxId).innerHTML !== "") boxArr.push(boxId);
+        })
+        if (boxArr.length === 9) return true;
+        return false;
+    };
+
+    const endGameTie = () => {
+        const endgame = document.getElementById("endgame")
+        const endgameInfo = document.getElementById("endgame-info")
+        endgame.hidden = false;
+        endgameInfo.innerHTML = `Tie Game!`
+        let boxIds = Array.from(Array(9).keys());
+        boxIds.forEach((boxId) => {
+            document.getElementById(boxId).style.background = "red"
+        })
+        endThisGame();
+    }
     const endThisGame = () => {
         document.getElementById("game-table").removeEventListener("click", inputEventListener)
     }
-
-    const clearInputs = () => {
-        const boxIds = Array.from(Array(9).keys())
-        boxIds.forEach((id) => {
-            document.getElementById(id).innerHTML = "";
-            document.getElementById(id).style.background = "none"
-        })
-        gamePlay.currentPlayers = [];
-    }
-
-    return {inputMode, gameMode, validateForm, formHandler, placeInput, changePlayer, checkWin, winner, clearInputs}
+    return {getInputs}
 })();
 
-const gameBoard = (() => {
-    const board = [];
-    return {}
+const eventHandlers = (() => {
+    const validateForm = () => {
+        const playerOne = document.getElementById("player1-input").value
+        const playerTwo = document.getElementById("player2-input").value
+        if ((playerOne.length !== 0 && playerTwo.length !== 0) && (playerOne !== playerTwo) && (playerOne.trim().length !== 0 && playerTwo.trim().length !== 0)) {
+            return true;
+        } else return false;
+
+    };
+    const formHandler = () => {
+        document.getElementById("submit-btn").addEventListener("click", function(e) {
+                e.preventDefault();
+                let validForm = validateForm();
+                if (validForm) {
+                    gamePlay.getInputs();
+                } else {
+                    alert("Fill out everything, and provide different names");
+                };
+            });
+    };
+    return {formHandler};
 })();
 
-handlers.inputMode();
-handlers.formHandler();
-
-
-//Here is the whole game:
-//Add eventlisteners to every tile
-//Create the players using the inputs from the DOM
-//The eventlistener will look at the current player
-//player1 will be X, player2 will be O (use count = 0, and let sym = count == 0 ? "X" : "O" )
-//currentplayer.getInput will get the current players symbol
-//the symbol will then be placed into the innerHTML of the element
-//then the game will do some checks like win? tie?
-//if none, then swap the players in the array and repeat process
-//if win or tie, end game and highlight the backgrounds for tiles
-//eventually add an AI
-
-
-// ("click", function() {
-//     let symbol = gamePlay.currentPlayer[0]
-//     this.innerHTML = symbol
-//     currentPlayer.checkwin();
-//     let val = gamePlay.currentPlayer.pop
-//     gamePlay.currentPlayer.unshift(val);
-// })
+gameState.inputMode();
+eventHandlers.formHandler();
+//Add tie 
+//Add Ai
+//Add Css

@@ -11,7 +11,7 @@ body {
     position: absolute;
     margin-top: -70px;
     margin-left: 70px;
-    width: 125px;
+    width: 185px;
     height: 25px;
     border: 1px solid green;
     background-color: rgba(77, 250, 8, 0.8)
@@ -108,10 +108,9 @@ tr {
 
 #endgame {
     position: absolute;
-    margin-top: 50px;
     padding-top: 200px;
-    height: 200px;
-    width: 370px;
+    height: 300px;
+    width: 751px;
     background-color: rgba(240, 224, 6, 0.5)
 }
 
