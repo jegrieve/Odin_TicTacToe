@@ -17,15 +17,23 @@ body {
     height: 25px;
     border: 1px solid rgba(61, 20, 245, 0.5);
     background-color: rgba(240, 11, 11, 0.9);
+    height: 50px;
 }
 
 #retry-btn {
-    margin-top: -70px;
+    margin-top: 10px;
     margin-left: 70px;
     width: 185px;
     height: 25px;
     border: 1px solid rgba(61, 20, 245, 0.5);
     background-color: rgba(39, 233, 14, 0.9);
+    height: 50px;
+}
+
+#replay {
+    margin-top: 230px;
+    text-align:center;
+    padding-right: 80px;
 }
 
 .game-container {
@@ -35,7 +43,6 @@ body {
 }
 
 #player-inputs {
-    /* display: none; */
     border: 1px solid rgba(0, 0, 0, 0.3);
     height: 350px;
     width: 30%;
