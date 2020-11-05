@@ -31,12 +31,12 @@ const gameData = (() => {
         document.getElementById("endgame").hidden = true;
         document.getElementById("replay-btn").hidden = true;
         document.getElementById("retry-btn").hidden = true;
+        if (currentPlayers[0].symbol === "O") gamePlay.changePlayer();
         gamePlay.placeInput();
     };
     let aiPlayer = "";
     return {currentPlayers, winningCombos, clearInputs, clearInputsRetry, aiPlayer};
 })();
-
 const gameState = (() => {
     const inputMode = () => { 
         document.getElementById("retry-btn").hidden = true;
@@ -101,7 +101,7 @@ const gamePlay = (() => {
         let currentPlayer = gameData.currentPlayers[1];
         boxIds.forEach((boxId) => {
             if (document.getElementById(boxId).innerHTML === "") validBoxes.push(boxId)
-        })
+        });
         document.getElementById(validBoxes[Math.floor(Math.random()*validBoxes.length)]).innerHTML = gameData.currentPlayers[1].symbol
                     if (checkWin(currentPlayer.symbol)) winner(currentPlayer.name, checkWin(currentPlayer.symbol))
     };
@@ -111,9 +111,8 @@ const gamePlay = (() => {
         for (let i = 0; i < 9; i++) {
             if (document.getElementById(i).innerHTML === symbol) {
                 combos.push(Number(i))
-            }
-        }
-
+            };
+        };
         let winCombo = "";
         winningCombos.forEach((array) => {
             let possibleCombo = [];
@@ -131,7 +130,6 @@ const gamePlay = (() => {
         if (winCombo) return winCombo
         return false
     };
-
     const winner = (player, winCombo) => {
         const endgame = document.getElementById("endgame")
         const endgameInfo = document.getElementById("endgame-info")
@@ -142,7 +140,6 @@ const gamePlay = (() => {
         })
         endThisGame();
     }
-
     const tieGame = () => {
         let boxIds = Array.from(Array(9).keys());
         let boxArr = [];
@@ -152,7 +149,6 @@ const gamePlay = (() => {
         if (boxArr.length === 9) return true;
         return false;
     };
-
     const endGameTie = () => {
         const endgame = document.getElementById("endgame")
         const endgameInfo = document.getElementById("endgame-info")
@@ -169,7 +165,7 @@ const gamePlay = (() => {
         document.getElementById("replay-btn").hidden = false;
         document.getElementById("retry-btn").hidden = false;
     }
-    return {getInputs, placeInput}
+    return {getInputs, placeInput, changePlayer}
 })();
 
 const eventHandlers = (() => {
@@ -179,7 +175,6 @@ const eventHandlers = (() => {
         if ((playerOne.length !== 0 && playerTwo.length !== 0) && (playerOne !== playerTwo) && (playerOne.trim().length !== 0 && playerTwo.trim().length !== 0)) {
             return true;
         } else return false;
-
     };
     const formHandler = () => {
         document.getElementById("submit-btn").addEventListener("click", function(e) {
@@ -198,7 +193,3 @@ const eventHandlers = (() => {
 
 gameState.inputMode();
 eventHandlers.formHandler();
-
-//Add Css
-//Add retry button
-//Add minimax (maybe)
