@@ -21,7 +21,8 @@ const gameData = (() => {
         })
         gameData.currentPlayers = [];
     };
-    return {currentPlayers, winningCombos, clearInputs};
+    let aiPlayer = "";
+    return {currentPlayers, winningCombos, clearInputs, aiPlayer};
 })();
 
 const gameState = (() => {
@@ -70,9 +71,21 @@ const gamePlay = (() => {
             } else if (tieGame()) {
                 endGameTie();
             } else { 
-                changePlayer();
+                if (gameData.aiPlayer === true) {
+                    aiMoveInput();
+                } else changePlayer();
             };
         };
+    };
+    const aiMoveInput = () => {
+        const boxIds = Array.from(Array(9).keys());
+        let validBoxes = [];
+        let currentPlayer = gameData.currentPlayers[1];
+        boxIds.forEach((boxId) => {
+            if (document.getElementById(boxId).innerHTML === "") validBoxes.push(boxId)
+        })
+        document.getElementById(validBoxes[Math.floor(Math.random()*validBoxes.length)]).innerHTML = gameData.currentPlayers[1].symbol
+                    if (checkWin(currentPlayer.symbol)) winner(currentPlayer.name, checkWin(currentPlayer.symbol))
     };
     const checkWin = (symbol) => {
         let winningCombos = gameData.winningCombos
@@ -152,6 +165,7 @@ const eventHandlers = (() => {
         document.getElementById("submit-btn").addEventListener("click", function(e) {
                 e.preventDefault();
                 let validForm = validateForm();
+                gameData.aiPlayer = document.getElementById("ai-input").checked;
                 if (validForm) {
                     gamePlay.getInputs();
                 } else {
@@ -164,6 +178,6 @@ const eventHandlers = (() => {
 
 gameState.inputMode();
 eventHandlers.formHandler();
-//Add tie 
+
 //Add Ai
 //Add Css
