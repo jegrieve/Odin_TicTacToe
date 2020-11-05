@@ -1,10 +1,12 @@
 body {
     font-family: 'Itim', cursive;
+    background-color: rgba(20, 155, 245, 0.9);
 }
 
 #title {
     text-align: center;
     font-size: 50px;
+    color: rgba(61, 20, 245, 0.9);
 }
 
 #replay-btn { 
@@ -13,8 +15,17 @@ body {
     margin-left: 70px;
     width: 185px;
     height: 25px;
-    border: 1px solid green;
-    background-color: rgba(77, 250, 8, 0.8)
+    border: 1px solid rgba(61, 20, 245, 0.5);
+    background-color: rgba(240, 11, 11, 0.9);
+}
+
+#retry-btn {
+    margin-top: -70px;
+    margin-left: 70px;
+    width: 185px;
+    height: 25px;
+    border: 1px solid rgba(61, 20, 245, 0.5);
+    background-color: rgba(39, 233, 14, 0.9);
 }
 
 .game-container {
@@ -25,11 +36,13 @@ body {
 
 #player-inputs {
     /* display: none; */
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.3);
     height: 350px;
     width: 30%;
     text-align: center;
     margin: auto;
+    color: blue;
+    background-color: rgba(231, 241, 241, 0.5)
 }
 
 .inputs {
@@ -40,24 +53,9 @@ body {
 #submit-btn {
     height:30px;
     width: 80px;
+    border: 1px solid rgba(61, 20, 245, 0.5) ;
+    background-color: rgba(61, 20, 245, 0.9)
 }
-
-#game-table {
-    /* display:none; */
-}
-
-/* #player-1 {
-
-}
-    
-#player-2 {
-
-}
-    
-#player-ai {
-
-}
-     */
 
 #game-inputs {
     border:1px solid black;
@@ -110,7 +108,7 @@ tr {
     position: absolute;
     padding-top: 200px;
     height: 300px;
-    width: 751px;
+    width: 760px;
     background-color: rgba(240, 224, 6, 0.5)
 }
 
@@ -124,4 +122,8 @@ tr {
 #endgame-btn {
     width: 100px;
     height: 100px;
+}
+
+input {
+    background-color: rgba(255, 255, 255, 0.7)
 }

@@ -21,12 +21,26 @@ const gameData = (() => {
         })
         gameData.currentPlayers = [];
     };
+    const clearInputsRetry = () => {
+        const boxIds = Array.from(Array(9).keys());
+        boxIds.forEach((id) => {
+            let box = document.getElementById(id);
+            box.innerHTML = "";
+            box.style.background = "none";
+        })
+        document.getElementById("endgame").hidden = true;
+        document.getElementById("replay-btn").hidden = true;
+        document.getElementById("retry-btn").hidden = true;
+        gamePlay.placeInput();
+    };
     let aiPlayer = "";
-    return {currentPlayers, winningCombos, clearInputs, aiPlayer};
+    return {currentPlayers, winningCombos, clearInputs, clearInputsRetry, aiPlayer};
 })();
 
 const gameState = (() => {
     const inputMode = () => { 
+        document.getElementById("retry-btn").hidden = true;
+        document.getElementById("replay-btn").hidden = true;
         document.getElementById("player-inputs").hidden = false;
         document.getElementById("endgame").hidden = true;
         document.getElementById("game-table").hidden = true;
@@ -47,9 +61,13 @@ const gamePlay = (() => {
         const xPlayerName = document.getElementById("player1-input").value
         const oPlayerName = document.getElementById("player2-input").value
         const replayBtn = document.getElementById("replay-btn")
+        const retryBtn = document.getElementById("retry-btn")
         replayBtn.addEventListener("click", function(e) {
             gameData.clearInputs();
             gameState.inputMode();
+        });
+        retryBtn.addEventListener("click", function(e) {
+            gameData.clearInputsRetry();
         })
         gameData.currentPlayers.push(Player(xPlayerName))
         gameData.currentPlayers.push(Player(oPlayerName))
@@ -148,8 +166,10 @@ const gamePlay = (() => {
     }
     const endThisGame = () => {
         document.getElementById("game-table").removeEventListener("click", inputEventListener)
+        document.getElementById("replay-btn").hidden = false;
+        document.getElementById("retry-btn").hidden = false;
     }
-    return {getInputs}
+    return {getInputs, placeInput}
 })();
 
 const eventHandlers = (() => {
@@ -179,5 +199,6 @@ const eventHandlers = (() => {
 gameState.inputMode();
 eventHandlers.formHandler();
 
-//Add Ai
 //Add Css
+//Add retry button
+//Add minimax (maybe)
